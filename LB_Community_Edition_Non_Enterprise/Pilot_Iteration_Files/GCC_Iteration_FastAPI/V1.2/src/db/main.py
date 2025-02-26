@@ -1,5 +1,4 @@
 from sqlalchemy.ext.asyncio import create_async_engine
-from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import text, SQLModel
 from src.config import settings  # Ensure correct settings import
 
@@ -26,7 +25,7 @@ async def init_db():
                             InterventionCategories,\
                             InterventionSession,\
                             PeopleInDB, \
-                            ReadinessStatusData, \
+                            CCReadinessStatusData, \
                             CCReadinessNumerator, \
                             CCReadinessDenominatorData, \
                             CCReadinessChangeData, \
@@ -40,3 +39,5 @@ async def init_db():
                             Vendor
                              
         await conn.run_sync(SQLModel.metadata.create_all)
+
+

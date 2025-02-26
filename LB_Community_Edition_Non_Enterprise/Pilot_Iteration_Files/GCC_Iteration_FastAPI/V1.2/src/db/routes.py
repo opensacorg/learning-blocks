@@ -1,11 +1,8 @@
-from fastapi import FastAPI
-from contextlib import asynccontextmanager
-from src.db.main import init_db
 from fastapi import APIRouter, HTTPException, Depends
 from typing import List
 from sqlmodel import Session, select
 from src.db.session import get_session 
-from src.db.models import (
+from db.models import (
     AcademicTotalData,
     AcademicChangeData,
     AcademicDenominator,
@@ -40,25 +37,7 @@ from src.db.enums import (
     ColorEnum
 )
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    #things to do before starting the app
-    print("Starting app")
-    await init_db()
-    yield
-    #things to do before stopping the app and after the server has stopped
-    print("Stopping app")
-
-app = FastAPI(
-    title="LB_V1.2",
-    version="1.0.0", 
-    description="This is a simple API to test the FastAPI framework",
-    lifespan= lifespan
-)
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+app = APIRouter()
 
 # Get teacher info based on intervention session in an Intervention Session
 @app.get("/intervention_session/{intervention_session_id}/teachers", response_model=List[TeacherInDB])

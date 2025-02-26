@@ -15,7 +15,7 @@ from typing import List, Optional
 from sqlmodel import SQLModel, Field, Relationship
 from sqlalchemy import Integer, String, Enum as SQLAlchemyEnum, DateTime
 from uuid import uuid4
-from .enums import RoleEnum, LocationEnum, CCIEnum, HigherGroupEnum, SubgroupEnum, GenderSubgroupEnum, EconomicStatusEnum, ColorEnum, LevelEnum, TrueFalseEnum
+from .enums import RoleEnum, LocationEnum, CCIEnum, HigherGroupEnum, SubgroupEnum, GenderSubgroupEnum, EconomicStatusEnum, ColorEnum, LevelEnum, TrueFalseEnum, InterventionTiersEnum
 
 
 # Polymorphic model for teachers
@@ -49,6 +49,7 @@ class BaseWithPolymorphism(SQLModel):
         }
 
 class AcademicData:
+    AcademicID: int = Field(default=None, primary_key=True, index=True)
     AcademicYear: str = Field(nullable=False, index=True)
     AcademicSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     AcademicGradeLevel: str = Field(nullable=False, index=True)
@@ -59,6 +60,7 @@ class AcademicData:
     AcademicEconomicStatus: EconomicStatusEnum = Field(nullable=False, index=True)
     AcademicCurrent: TrueFalseEnum = Field(nullable=False, index=True)
     AcademicAllStu: TrueFalseEnum = Field(nullable=False, index=True)
+
 
 class AcademicTotalData(AcademicData, SQLModel, table=True):
     __tablename__ = "Academic_total_data"
@@ -140,6 +142,7 @@ class AcademicPerformanceLevelorColor(AcademicData, SQLModel, table=True):
 class CCReadinessData:
   
 
+    CCID: int = Field(default=None, primary_key=True, index=True)
     CCAcademicYear: str = Field(nullable=False, index=True)
     CCReadinessLocation: LocationEnum = Field(nullable=False, index=True) 
     CCReadinessCCI: CCIEnum = Field(  nullable=False, index=True)
@@ -150,12 +153,15 @@ class CCReadinessData:
     CCCurrent: TrueFalseEnum = Field(nullable=False, index=True) 
     CCAllStu: TrueFalseEnum = Field(nullable=False, index=True)
 
-
+class CCStuRelateData(CCReadinessData, SQLModel, table=True):
+    __tablename__ = "CC_stu_relate_data"
+    CCStuRelateSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
+    CCStuRelateStudents: List["StudentInDB"] = Relationship(back_populates="CCStuRelateData")
 
 
 class CCReadinessTotalData(CCReadinessData, SQLModel, table=True):
     __tablename__ = "readiness_total_data"
-    CCReadinessTotalID: int = Field(default=None, primary_key=True, index=True)
+    CCReadinessTotalID: int = Field(default=None, primary_key=True, index=True, unique=True)
     CCReadinessTotalStu: int = Field(nullable=False)
     CCReadinessTotalSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     CCReadinessTotalStudents: List["StudentInDB"] = Relationship(back_populates="ReadinessTotalData")
@@ -165,7 +171,7 @@ class CCReadinessTotalData(CCReadinessData, SQLModel, table=True):
 
 class CCReadinessNumerator(CCReadinessData, SQLModel, table=True):
     __tablename__ = "readiness_numerator"
-    CCReadinessNumeratorID: int = Field(default=None, primary_key=True, index=True)
+    CCReadinessNumeratorID: int = Field(default=None, primary_key=True, index=True, unique=True)
     CCReadinessNumeratorTotal: int = Field(unique=True, nullable=False)
     CCReadinessSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     CCReadinessStudents: List["StudentInDB"] = Relationship(back_populates="ReadinessNumerator")
@@ -181,16 +187,16 @@ class CCPerformanceLevelorColorData(CCReadinessData, SQLModel, table=True):
     CCReadinesStudents: List["StudentInDB"] = Relationship(back_populates="ReadinessNumerator")
 
 
-class ReadinessStatusData(CCReadinessData, SQLModel, table=True):
+class CCReadinessStatusData(CCReadinessData, SQLModel, table=True):
     __tablename__ = "readiness_status_data"
-    CCReadinesStatusID: int = Field(default=None, primary_key=True, index=True)
+    CCReadinesStatusID: int = Field(default=None, primary_key=True, unique= True ,index=True)
     CCReadinesStatusRate: str = Field(nullable=False)
     CCReadinesSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
 
 
 class CCReadinessDenominatorData(CCReadinessData, SQLModel, table=True):
     __tablename__ = "readiness_denominator_data"
-    CCReadinesDenominatorID: int = Field(default=None, primary_key=True, index=True)
+    CCReadinesDenominatorID: int = Field(default=None, primary_key=True, index=True, unique=True)
     CCReadinesDenominatorRate: str = Field( nullable=False)
     CCReadinesSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
 
@@ -223,16 +229,22 @@ class SchoolsInDB(TimestampMixin, SQLModel, table=True):
     school: Optional["SchoolsInDB"] = Relationship(back_populates="people")
     Sections: Optional[List[str]] = Field(default=None, sa_column=Column(pg.ARRAY(String)))
  
-    school_readiness_status_data: List["ReadinessStatusData"] = Relationship(back_populates="school")
+    school_readiness_status_data: List["CCReadinessStatusData"] = Relationship(back_populates="school")
     school_performance_color_data: List["CCPerformanceLevelorColorData"] = Relationship(back_populates="school")
     school_readiness_change_data: List["CCReadinessChangeData"] = Relationship(back_populates="school")
     school_readiness_total_data: List["CCReadinessTotalData"] = Relationship(back_populates="school")
     school_readiness_numerator: List["CCReadinessNumerator"] = Relationship(back_populates="school")
     school_readiness_denominator_data: List["CCReadinessDenominatorData"] = Relationship(back_populates="school")
     
+    school_academic_status_data: List["AcademicStatusData"] = Relationship(back_populates="school")
+    school_academic_change_data: List["AcademicChangeData"] = Relationship(back_populates="school")
+    school_academic_total_data: List["AcademicTotalData"] = Relationship(back_populates="school")
+
 
     # Add relationship to SectionsInDB
     sections: List["SectionsInDB"] = Relationship(back_populates="school")
+
+
 
 
 class SectionsInDB(TimestampMixin,SQLModel, table=True):
@@ -285,18 +297,16 @@ class StudentInDB(TimestampMixin, BaseWithPolymorphism, table=True):
     Sections: Optional[List[str]] = Field(default=None, sa_column=Column(pg.ARRAY(String)))
     sections: List["SectionsInDB"] = Relationship(back_populates="students")   
     Interventions: Optional[List[str]] = Field(default=None, sa_column=Column(pg.ARRAY(String)))    
-    ReadinessTotalID: Optional[int] = Field(default=None, foreign_key="readiness_total_data.ReadinessTotalID", index=True)  
-    ReadinessNumeratorID: Optional[int] = Field(default=None, foreign_key="readiness_numerator.NumeratorID", index=True)    
-    ReadinessDenominatorID: Optional[int] = Field(default=None, foreign_key="readiness_denominator.DenominatorID", index=True)
- 
-    
+    ReadinessTotalID: Optional[int] = Field(default=None, foreign_key="readiness_total_data.CCReadinessTotalID")
+    ReadinessNumeratorID: Optional[int] = Field(default=None, foreign_key="readiness_numerator.CCReadinessNumeratorID", index=True)    
+    ReadinessDenominatorID: Optional[int] = Field(default=None, foreign_key="readiness_denominator_data.CCReadinesDenominatorID", index=True)
     # Define the relationships with ReadinessStatusData and PerformanceColorData
-    student_readiness_status_data: List["ReadinessStatusData"] = Relationship(back_populates="school")
-    student_performance_color_data: List["CCPerformanceLevelorColorData"] = Relationship(back_populates="school")
-    student_readiness_change_data: List["CCReadinessChangeData"] = Relationship(back_populates="school")
-    student_readiness_total_data: List["CCReadinessTotalData"] = Relationship(back_populates="school")
-    student_readiness_numerator: List["CCReadinessNumerator"] = Relationship(back_populates="school")
-    student_readiness_denominator_data: List["CCReadinessDenominatorData"] = Relationship(back_populates="school")
+    student_readiness_status_data: List["CCReadinessStatusData"] = Relationship(back_populates="students")
+    student_performance_color_data: List["CCPerformanceLevelorColorData"] = Relationship(back_populates="students")
+    student_readiness_change_data: List["CCReadinessChangeData"] = Relationship(back_populates="students")
+    student_readiness_total_data: List["CCReadinessTotalData"] = Relationship(back_populates="students")
+    student_readiness_numerator: List["CCReadinessNumerator"] = Relationship(back_populates="students")
+    student_readiness_denominator_data: List["CCReadinessDenominatorData"] = Relationship(back_populates="students")
     
     __mapper_args__ = {
         "polymorphic_identity": "student",
@@ -309,6 +319,7 @@ class TeacherInDB(TimestampMixin, BaseWithPolymorphism, table=True):
     # Regular fields
     TeacherID: int = Field(default=None, primary_key=True, foreign_key="people.PeopleID", index=True)
     AnonymizedTeacherID: str = Field(nullable=False, unique=True)
+    TeacherEmail: Optional[str] = Field(default=None, index=True)
     StuAssociated: Optional[Dict[str, Dict[str, Optional[str]]]] = Field(
         default=None, sa_column=Column(JSON)
     )
@@ -389,25 +400,27 @@ class InterventionCategories(TimestampMixin, BaseWithPolymorphism, table=True):
         __mapper_args__ = {
             "polymorphic_identity": "intervention_categories",
         }
-
 class InterventionSession(TimestampMixin, BaseWithPolymorphism, table=True):
         __tablename__ = "interventionSession"
 
         # Regular fields
         InterventionSessionID: int = Field(default=None, primary_key=True, index=True)
-        Intervention_Category: Optional[int] = Field(default=None, foreign_key="intervention_categories.InterventionCategoriesID", primary_key=True)
-        InterventionSessionName: str = Field(nullable=False)
+        Intervention_Category: Optional[int] = Field(default=None, foreign_key="intervention_categories.InterventionCategoriesID", primary_key=True, index=True)
+        InterventionSessionName: str = Field(nullable=False, index=True)
+        Tier: InterventionTiersEnum = Field(nullable=False, index=True)
+        StartDate: datetime = Field(nullable=False, index=True)
+        EndDate: datetime = Field(nullable=False, index=True)
+        StartTime: datetime = Field(nullable=False, index=True)
+        EndTime: datetime = Field(nullable=False, index=True)
         MetaData: Optional[Dict[str, BaseModel]] = Field(default=None, sa_column=Column(JSON))
         Vendor: Optional[int] = Field(nullable=False, foreign_key="vendor.VendorID", index=True)
         Teacher: Optional[int] = Field(nullable=False, foreign_key="teachers.TeacherID", index=True)   
-        student_id: Optional[int] = Field(default=None, foreign_key="students.StudentID", primary_key=True)
-        school: Optional["SchoolsInDB"] = Relationship(back_populates="people")
-        created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(datetime.timezone.utc))
-        updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(datetime.timezone.utc), sa_column_kwargs={"onupdate": lambda: datetime.now(datetime.timezone.utc)})
+        Students: Optional[List[int]] = Field(default=None, sa_column=Column(pg.ARRAY(Integer)))
+        school: Optional["SchoolsInDB"] = Relationship(back_populates="school")
+        created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(datetime.timezone.utc), index=True)
+        updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(datetime.timezone.utc), sa_column_kwargs={"onupdate": lambda: datetime.now(datetime.timezone.utc), "index": True})
 
         __mapper_args__ = {
             "polymorphic_identity": "interventions",
         }
 
-class Config:
-    arbitrary_types_allowed = True

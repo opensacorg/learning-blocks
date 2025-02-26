@@ -76,3 +76,7 @@ class LevelEnum(str, Enum):
     very_high = "very_high"
     no_performance_level = "no_performance_level"   
 
+class InterventionTiersEnum(int, Enum):
+    tier1 = 1
+    tier2 = 2
+    tier3 = 3
