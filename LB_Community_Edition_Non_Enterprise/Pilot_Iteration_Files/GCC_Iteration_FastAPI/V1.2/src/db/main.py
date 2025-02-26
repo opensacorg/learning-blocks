@@ -15,16 +15,22 @@ async_engine = create_async_engine(
 # Function to initialize the database connection
 async def init_db():
     async with async_engine.begin() as conn:
-        from .models import CCPerformanceColorData,\
+        from .models import \
+                            AcademicTotalData,\
+                            AcademicChangeData, \
+                            AcademicDenominator, \
+                            AcademicNumerator, \
+                            AcademicPerformanceLevelorColor, \
+                            CCPerformanceLevelorColorData, \
                             class_section,\
                             InterventionCategories,\
                             InterventionSession,\
                             PeopleInDB, \
                             ReadinessStatusData, \
-                            ReadinessNumerator, \
-                            ReadinessDenominatorData, \
-                            ReadinessChangeData, \
-                            ReadinessTotalData, \
+                            CCReadinessNumerator, \
+                            CCReadinessDenominatorData, \
+                            CCReadinessChangeData, \
+                            CCReadinessTotalData, \
                             RoleEnum ,\
                             StudentSectionAssociation, \
                             SchoolsInDB, \
