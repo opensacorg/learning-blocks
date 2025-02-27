@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlmodel import text, SQLModel
 from src.config import settings  # Ensure correct settings import
-
+from src.db.routes import app
 # Access the DATABASE_URL from settings
 DATABASE_URL = settings.DATABASE_URL
 
@@ -37,7 +37,8 @@ async def init_db():
                             SectionsInDB, \
                             TeacherInDB, \
                             Vendor
-                             
+        app.include_router(app, prefix="/api", tags=["Intervention Sessions"])
+                     
         await conn.run_sync(SQLModel.metadata.create_all)
 
 

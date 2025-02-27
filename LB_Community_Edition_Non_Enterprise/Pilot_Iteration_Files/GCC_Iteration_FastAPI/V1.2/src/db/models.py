@@ -66,21 +66,18 @@ class AcademicTotalData(AcademicData, SQLModel, table=True):
     __tablename__ = "Academic_total_data"
     AcademicTotalID: int = Field(default=None, primary_key=True, index=True)
     AcademicTotalStu: int = Field(nullable=False)
-    AcademicTotalSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     AcademicTotalStudents: List["StudentInDB"] = Relationship(back_populates="AcademicTotalData")
 
 class AcademicNumerator(AcademicData, SQLModel, table=True):
     __tablename__ = "academic_numerator"
     AcademicNumeratorID: int = Field(default=None, primary_key=True, index=True)
     AcademicNumeratorTotal: int = Field(unique=True, nullable=False)
-    AcademicNumeratorSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     AcademicNumeratorStudents: List["StudentInDB"] = Relationship(back_populates="AcademicNumerator")
 
 class AcademicDenominator(AcademicData, SQLModel, table=True):
     __tablename__ = "academic_Denominator"
     AcademicDenominatorID: int = Field(default=None, primary_key=True, index=True)
     AcademicDenominatorTotal: int = Field(unique=True, nullable=False)
-    AcademicDenominatorSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     AcademicDenominatorStudents: List["StudentInDB"] = Relationship(back_populates="AcademicDenominator")
 
 
@@ -88,7 +85,6 @@ class AcademicColorData(AcademicData, SQLModel, table=True):
     __tablename__ = "Academic_color_data"
     AcademicColorlID: int = Field(default=None, primary_key=True, index=True)
     AcademicColor: ColorEnum = Field(default="NA" , index = True, nullable=False)
-    AcademicColorSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     AcademicColorStudents: List["StudentInDB"] = Relationship(back_populates="AcademicColorData")
 
 
@@ -96,7 +92,6 @@ class AcademicStatusData(AcademicData, SQLModel, table=True):
     __tablename__ = "Academic_status_data"
     AcademicStatusID: int = Field(default=None, primary_key=True, index=True)
     AcademicStatusRate: str = Field(nullable=False)
-    AcademicSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     AcademicStatusStudents: List["StudentInDB"] = Relationship(back_populates="AcademicStatusData")
 
 
@@ -104,7 +99,6 @@ class AcademicChangeData(AcademicData, SQLModel, table=True):
     __tablename__ = "Academic_change_data"
     AcademicChangeID: int = Field(default=None, primary_key=True, index=True)
     AcademicChangeRate: str = Field( nullable=False)
-    AcademicSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     AcademicChangeStudents: List["StudentInDB"] = Relationship(back_populates="AcademicStatusData")
 
 
@@ -113,7 +107,6 @@ class AcademicPerformanceLevelorColor(AcademicData, SQLModel, table=True):
     AcademicPerformanceID: int = Field(default=None, primary_key=True, index=True)
     AcademicPerformColor: ColorEnum = Field(default="NA" , index = True, nullable=False)
     AcademicPerformLevel: LevelEnum = Field(default="no_performance_level", index = True, nullable=False)    
-    AcademicSchoolCode: str = Field(nullable=False, foreign_key="schools.SchoolCode", index=True)
     AcademicStudents: List["StudentInDB"] = Relationship(back_populates="AcademicPerformanceLevelorColor")
 
 
@@ -417,9 +410,7 @@ class InterventionSession(TimestampMixin, BaseWithPolymorphism, table=True):
         Teacher: Optional[int] = Field(nullable=False, foreign_key="teachers.TeacherID", index=True)   
         Students: Optional[List[int]] = Field(default=None, sa_column=Column(pg.ARRAY(Integer)))
         school: Optional["SchoolsInDB"] = Relationship(back_populates="school")
-        created_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(datetime.timezone.utc), index=True)
-        updated_at: Optional[datetime] = Field(default_factory=lambda: datetime.now(datetime.timezone.utc), sa_column_kwargs={"onupdate": lambda: datetime.now(datetime.timezone.utc), "index": True})
-
+   
         __mapper_args__ = {
             "polymorphic_identity": "interventions",
         }
