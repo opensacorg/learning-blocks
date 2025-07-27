@@ -15,7 +15,7 @@ export default function Navbar() {
 						className="pr-4 h-full rounded font-bold gap-[13px] text-[#013148] flex items-center leading-none tracking-wide"
 						to="/"
 					>
-						<img src="/logo.svg" alt="Logo" className="h-10"/>
+						<img src="/logo.svg" alt="Logo" className="h-10" />
 						<span className="">
 							Learning
 							<br />

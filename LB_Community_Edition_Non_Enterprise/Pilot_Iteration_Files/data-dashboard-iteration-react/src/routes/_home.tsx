@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import AppH5A from "@/components/layout/AppH5A"
+import AppH5A from "@/components/layout/AppH5A";
 
 export const Route = createFileRoute("/_home")({
 	component: HomeLayout,
