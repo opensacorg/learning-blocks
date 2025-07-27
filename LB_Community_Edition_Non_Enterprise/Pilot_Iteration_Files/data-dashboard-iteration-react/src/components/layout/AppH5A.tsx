@@ -1,4 +1,4 @@
-import Navbar from "../ui/navbar-light/Navbar"
+import Navbar from "../ui/navbar-light/Navbar";
 
 export default function AppH5A({ children }: { children: React.ReactNode }) {
 	return (

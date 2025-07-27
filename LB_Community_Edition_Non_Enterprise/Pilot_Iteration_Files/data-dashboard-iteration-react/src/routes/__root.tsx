@@ -4,7 +4,6 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import TanStackQueryLayout from "../integrations/tanstack-query/layout.tsx";
 
 interface AuthenticatedRouteContext {
-	
 	queryClient: QueryClient;
 }
 
