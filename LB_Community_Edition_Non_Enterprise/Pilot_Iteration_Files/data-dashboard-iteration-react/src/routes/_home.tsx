@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import Navbar from "@/components/navbar-light/Navbar";
+import AppH5A from "@/components/layout/AppH5A"
 
 export const Route = createFileRoute("/_home")({
 	component: HomeLayout,
@@ -7,9 +7,8 @@ export const Route = createFileRoute("/_home")({
 
 export default function HomeLayout() {
 	return (
-		<>
-			<Navbar />
+		<AppH5A>
 			<Outlet />
-		</>
+		</AppH5A>
 	);
 }

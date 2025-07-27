@@ -24,7 +24,6 @@
     "@tanstack/react-router": "^1.130.1",
     "@tanstack/react-router-devtools": "^1.130.1",
     "@tanstack/react-table": "^8.21.3",
-    "@tanstack/router-plugin": "^1.130.1",
     "echarts": "^5.6.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -33,6 +32,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.1.2",
+    "@tanstack/router-plugin": "^1.130.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@types/node": "^24.1.0",

@@ -2,7 +2,7 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 
-import * as TanStackQueryProvider from "./integrations/tanstack-query/root-provider.tsx";
+import * as AppQueryProvider from "./integrations/tanstack-query/root-provider.tsx";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
@@ -14,7 +14,7 @@ import reportWebVitals from "./reportWebVitals.ts";
 const router = createRouter({
 	routeTree,
 	context: {
-		...TanStackQueryProvider.getContext(),
+		...AppQueryProvider.getContext(),
 	},
 	defaultPreload: "intent",
 	scrollRestoration: true,
@@ -35,9 +35,9 @@ if (rootElement && !rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<StrictMode>
-			<TanStackQueryProvider.Provider>
+			<AppQueryProvider.Provider>
 				<RouterProvider router={router} />
-			</TanStackQueryProvider.Provider>
+			</AppQueryProvider.Provider>
 		</StrictMode>,
 	);
 }

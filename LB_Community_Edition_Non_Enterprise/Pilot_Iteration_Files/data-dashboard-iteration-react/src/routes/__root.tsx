@@ -3,11 +3,11 @@ import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import TanStackQueryLayout from "../integrations/tanstack-query/layout.tsx";
 
-interface MyRouterContext {
+interface AuthenticatedRouteContext {
 	queryClient: QueryClient;
 }
 
-export const Route = createRootRouteWithContext<MyRouterContext>()({
+export const Route = createRootRouteWithContext<AuthenticatedRouteContext>()({
 	component: () => (
 		<>
 			<Outlet />
