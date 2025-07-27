@@ -1,0 +1,72 @@
+/* SearchBar component styles */
+.searchbar-root {
+	position: relative;
+	min-width: 220px;
+	max-width: 400px;
+}
+
+@media screen and (min-width: 1200px) {
+	.searchbar-root {
+		min-width: 400px;
+	}
+}
+
+.searchbar-form {
+	display: flex;
+	flex-direction: column;
+}
+
+.searchbar-input {
+	padding: 6px 6px 6px 39px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	font-size: 16px;
+	background-image: url("/search.svg");
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	background-size: 18px 18px;
+}
+
+.searchbar-dropdown {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	background: #fff;
+	border: 1px solid #eee;
+	border-radius: 4px;
+	margin-top: 4px;
+	z-index: 10;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.searchbar-category-block {
+	padding: 8px 0;
+}
+
+.searchbar-category-heading {
+	font-weight: 600;
+	font-size: 13px;
+	color: #888;
+	padding: 4px 16px 2px 16px;
+}
+
+.searchbar-result-item {
+	display: block;
+	width: 100%;
+	text-align: left;
+	background: none;
+	border: none;
+	padding: 6px 16px;
+	cursor: pointer;
+	font-size: 15px;
+	color: #222;
+	transition: background 0.15s;
+}
+
+.searchbar-result-item:hover,
+.searchbar-result-item:focus {
+	background: #f5f5f5;
+}
