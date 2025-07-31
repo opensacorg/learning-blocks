@@ -1,0 +1,49 @@
+{
+  "name": "data-dashboard-iteration-react",
+  "version": "0.1.0",
+  "description": "A React-based data dashboard application with Tanstack.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "start": "vite --port 3000",
+    "build": "vite build && tsc",
+    "serve": "vite preview",
+    "test": "vitest run",
+    "format": "biome format --write",
+    "lint": "biome lint",
+    "fix": "biome check --write --unsafe",
+    "check": "biome check"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.9.0",
+    "@tailwindcss/vite": "^4.1.11",
+    "@tanstack/match-sorter-utils": "^8.19.4",
+    "@tanstack/react-form": "^1.15.0",
+    "@tanstack/react-query": "^5.83.0",
+    "@tanstack/react-query-devtools": "^5.83.0",
+    "@tanstack/react-router": "^1.130.1",
+    "@tanstack/react-router-devtools": "^1.130.1",
+    "@tanstack/react-table": "^8.21.3",
+    "echarts": "^5.6.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.11",
+    "zod": "^4.0.10"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.2",
+    "@tanstack/router-plugin": "^1.130.1",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^24.1.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.7.0",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.6",
+    "vitest": "^3.2.4",
+    "web-vitals": "^5.0.3"
+  },
+  "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
+}

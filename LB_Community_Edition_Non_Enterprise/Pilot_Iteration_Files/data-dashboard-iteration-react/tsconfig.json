@@ -1,0 +1,50 @@
+{
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "compilerOptions": {
+    "target": "ESNext",
+    "jsx": "react-jsxdev",
+    "module": "ESNext",
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "vite/client"
+    ],
+    "forceConsistentCasingInFileNames": true,
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
+    /* Linting */
+    "skipLibCheck": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    // Highly recommended for preventing silent bugs from imports with side effects
+    "noUncheckedIndexedAccess": true,
+    // Guards against `undefined` from indexed access
+    // `exactOptionalPropertyTypes` ensures `undefined` isn't implicitly assignable to optional properties.
+    // Can be strict but leads to more robust types.
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    /* Performance Optimizations */
+
+    // Enables incremental compilation, significantly speeding up rebuilds.
+    "incremental": true,
+    // Specifies the file where build info is stored.
+    "tsBuildInfoFile": "./node_modules/.tsbuildinfo"
+  }
+}

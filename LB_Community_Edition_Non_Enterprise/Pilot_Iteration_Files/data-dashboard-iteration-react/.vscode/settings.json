@@ -1,0 +1,55 @@
+{
+	"files.watcherExclude": {
+		"**/routeTree.gen.ts": true
+	},
+	"search.exclude": {
+		"**/routeTree.gen.ts": true
+	},
+	"files.readonlyInclude": {
+		"**/routeTree.gen.ts": true
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[javascriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"editor.codeActionsOnSave": {
+		"source.organizeImports.biome": "explicit"
+	},
+	"workbench.colorCustomizations": {
+		"activityBar.activeBackground": "#43b16a",
+		"activityBar.background": "#43b16a",
+		"activityBar.foreground": "#15202b",
+		"activityBar.inactiveForeground": "#15202b99",
+		"activityBarBadge.background": "#ede8f6",
+		"activityBarBadge.foreground": "#15202b",
+		"commandCenter.border": "#e7e7e799",
+		"sash.hoverBorder": "#43b16a",
+		"statusBar.background": "#358c54",
+		"statusBar.foreground": "#e7e7e7",
+		"statusBarItem.hoverBackground": "#43b16a",
+		"statusBarItem.remoteBackground": "#358c54",
+		"statusBarItem.remoteForeground": "#e7e7e7",
+		"titleBar.activeBackground": "#358c54",
+		"titleBar.activeForeground": "#e7e7e7",
+		"titleBar.inactiveBackground": "#358c5499",
+		"titleBar.inactiveForeground": "#e7e7e799"
+	},
+	"peacock.color": "358c54"
+}
