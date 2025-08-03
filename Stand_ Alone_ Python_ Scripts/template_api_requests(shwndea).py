@@ -43,6 +43,15 @@ HEADERS = {
 }
 
 def fetch_grade_students():
+    """
+    Fetches a list of students for a specific grade level from the school's API.
+
+    Returns:
+        dict: The JSON response containing student data.
+
+    Raises:
+        requests.HTTPError: If the HTTP request returned an unsuccessful status code.
+    """
     url = f"{BASE_URL}/api/v5/schools/{SCHOOL_ID}/students/grade/{GRADE_LEVEL}"
     resp = requests.get(url, headers=HEADERS, timeout=30)
     print(f"[FETCH] {url} → Status {resp.status_code}")
@@ -50,11 +59,41 @@ def fetch_grade_students():
     return resp.json()
 
 def save_json(data, filename='enrollment.json'):
+    """
+    Saves the provided data as a JSON file.
+
+    Args:
+        data (any): The data to be serialized and saved as JSON.
+        filename (str, optional): The name of the file to save the JSON data to. Defaults to 'enrollment.json'.
+
+    Returns:
+        None
+
+    Side Effects:
+        Writes the serialized JSON data to the specified file.
+        Prints a confirmation message indicating the file location.
+    """
     with open(filename, 'w') as f:
         json.dump(data, f, indent=2)
     print(f"[SAVE] Raw data written to {filename}")
 
 def json_to_csv(data, filename='enrollment.csv'):
+    """
+    Converts a list of JSON objects to a CSV file with specified columns.
+
+    Parameters:
+        data (list or dict): The JSON data to convert, typically a list of dictionaries.
+        filename (str, optional): The name of the output CSV file. Defaults to 'enrollment.csv'.
+
+    Notes:
+        - The function normalizes nested JSON data into a flat table.
+        - Only columns specified in the global COLUMNS variable are included in the output.
+        - Missing columns are filled with empty strings.
+        - Requires pandas to be imported as pd.
+
+    Outputs:
+        Writes the filtered CSV file to disk and prints a confirmation message.
+    """
     # Normalize JSON into a flat table
     df = pd.json_normalize(data)
     # Filter to the desired columns, ignoring missing ones
