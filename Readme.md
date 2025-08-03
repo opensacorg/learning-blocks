@@ -3,7 +3,9 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/code4sac/learning-blocks)](https://github.com/code4sac/learning-blocks/graphs/contributors)
 [![GitHub forks](https://img.shields.io/github/forks/code4sac/learning-blocks)](https://github.com/code4sac/learning-blocks/network/members)
 
-## Welcome to this open-source project dedicated to helping developers make API tools for student support service providers. The goal is for student support service providers to gain access to student informational systems. This repository has a couple of ways to do that depending on your level of expertise and depending on your intended use.
+## Welcome to this open-source project dedicated to helping developers make API tools for student support service providers. The educational data ecosysem comprises primarily of SFTP servers and API calls to databases. The goal is to help student support service providers to gain access ecosystems and make sense of them all the data. 
+
+## Because people looking at this repo has different levels of skill, this repository has a couple of ways to do that depending on your level of expertise and depending on your intended use.
 
 ### If you are a student support service provider trying to use these tools, please read [this documentation](https://github.com/code4sac/learning-blocks/blob/main/Documentation%20Directory/SSSP_Read_Me.md) However, you will need to reach out to your LEA's Database Coordinator for the following information:
 
