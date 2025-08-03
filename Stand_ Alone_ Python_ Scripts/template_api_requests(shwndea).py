@@ -77,6 +77,19 @@ def create_student_dict(data):
     return student_dict
 
 def main():
+    """
+    Main function to orchestrate the student data workflow.
+    Steps performed:
+    1. Fetches student data using `fetch_grade_students()`.
+    2. Saves the raw JSON data to 'enrollment.json' via `save_json()`.
+    3. Converts the JSON data to CSV format and saves as 'enrollment.csv' using `json_to_csv()`.
+    4. Builds a dictionary of students with `create_student_dict()` and prints a summary.
+    Returns:
+        dict: Dictionary mapping student IDs to their records.
+    Handles:
+        - requests.RequestException: If data fetching fails.
+        - Exception: For any other unexpected errors.
+    """
     try:
         # 1. Fetch data
         students = fetch_grade_students()
