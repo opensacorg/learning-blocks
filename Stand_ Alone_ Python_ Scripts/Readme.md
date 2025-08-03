@@ -1,5 +1,9 @@
 # Stand-alone Python scripts for Learning Blocks
 
+This page is dedicaed to:
+- People who want a place to better understand Aeries API system
+- 
+
 Scripts can be run with Python 3.
 
 ```shell
